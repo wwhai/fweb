@@ -1,0 +1,17 @@
+{application, fweb,
+   [{description, "A funny erlang web framework application"},
+        {vsn, git},
+        {registered, []},
+        {mod, {fweb_app, []}},
+        {applications,
+        [kernel,
+         stdlib,
+         cowboy,
+         jiffy
+        ]},
+    {env,[]},
+    {modules, []},
+    {licenses, ["Apache 2.0"]},
+    {links, ["http://www.ezlinker.cn"]}
+   ]}.
+  
