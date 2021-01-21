@@ -6,9 +6,7 @@
         {applications,
         [kernel,
          stdlib,
-         cowboy,
-         jiffy
-        ]},
+         cowboy]},
     {env,[]},
     {modules, []},
     {licenses, ["Apache 2.0"]},
