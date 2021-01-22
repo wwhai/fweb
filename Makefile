@@ -9,7 +9,7 @@ compile:
 	$(REBAR) compile
 
 ct: compile
-	$(REBAR) as test ct -v
+	$(REBAR) ct -v --name fweb@127.0.0.1
 
 eunit: compile
 	$(REBAR) as test eunit

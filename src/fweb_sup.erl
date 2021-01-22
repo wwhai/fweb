@@ -50,5 +50,9 @@ init([]) ->
                            shutdown => 2000,
                            type => worker,
                            modules => ['fweb_interceptor_manager']},
-    ChildSpecs = [Fweb, FwebCloudFunction, MappingManager, CacheManager, InterceptorManager],
+    ChildSpecs = [Fweb,
+                  FwebCloudFunction,
+                  MappingManager,
+                  CacheManager,
+                  InterceptorManager],
     {ok, {SupFlags, ChildSpecs}}.

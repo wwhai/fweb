@@ -14,19 +14,29 @@ start_link(Options) ->
 
 init(Options) ->
     LuaVM = luerl:init(),
-    Libs = [[cloud, fweb_cloud_lib]],
-    {ok, #state{luavm = load_lib(Libs, LuaVM), options = Options}}.
+    {ok, #state{luavm = luerl:set_table([<<"test_fun">>],fun fweb_cloud_api:f1/2, LuaVM), options = Options}}.
 
-handle_call({run_script, Script}, _From, #state{luavm = LuaVM} = State) ->
-    Result = case luerl_sandbox:run(Script, LuaVM) of
-        {error, _} -> run_error;
-        {R, _} -> R
+handle_call({run_script,
+             Script,
+             Reduction,
+             Period,
+             Timeout,
+             CallBackFunction,
+             CallBackArgs}, _From, #state{luavm = LuaVM} = State) ->
+    Result = luerl_sandbox:run(Script,
+                                LuaVM,
+                                Reduction,
+                                Period,
+                                Timeout,
+                                [[CallBackFunction], CallBackArgs]),
+    Reply = case Result of
+        {error, Reason} -> {error, Reason};
+        {R, NewState} -> R
     end,
-    {reply, Result, State};
+    {reply, Reply, State};
 handle_call({load_lib, Libs}, _From, #state{luavm = LuaVM, options = Options}) ->
     {reply, ok, #state{luavm = load_lib(Libs, LuaVM), options = Options}};
 handle_call(Msg, _From, State) ->
-    io:format("MODULE :[~p],Line:[~p] Ignore Msg :[~p]~n", [?MODULE, ?LINE, Msg]),
     {reply, ignore, State}.
 
 handle_cast(_Msg, State) ->

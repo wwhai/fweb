@@ -19,7 +19,8 @@ start_link(_) ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    EtsOptions = [named_table, public, set, {write_concurrency, true}, {read_concurrency, true}],
+    EtsOptions = [named_table, public, set, {write_concurrency, true},
+                                            {read_concurrency, true}],
     ets:new(fweb_mapping, EtsOptions ++ [{keypos, #handler.mapping}]),
     fweb:add_mapping([#{name =>index,mapping =>"/index"}]),
     {ok, #state{}}.

@@ -111,19 +111,15 @@ fweb_cache:flush(),
 
 ## Cloud function
 
-```
-f().
-E = [[{1,[{<<"k">>,<<"v">>}]},{2,2},{3,3},{4,4},{5,5}],<<"ok">>].
+```erlang
 {R, S} = luerl_sandbox:run(<<"function callback(request, cloud)
-                                          print('request:', request[1]['k'],request[2],request[3],request[4])
-                                          print('cloud:', cloud)
-                                          return request, cloud
-                              end">>,
+                                    print('request:', request[1]['k'],request[2],request[3]request[4])
+                                    print('cloud:', cloud)
+                                    return request, cloud 
+                          end">>,
                           luerl_sandbox:init(),
                           999999,
                           [{priority, low}],
                           2000,
                           [[callback], [[#{k=>v},2,3,4,5], ok]]).
-                          R.
-
 ```
