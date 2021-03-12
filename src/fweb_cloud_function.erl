@@ -24,11 +24,11 @@ handle_call({run_script,
              CallBackFunction,
              CallBackArgs}, _From, #state{luavm = LuaVM} = State) ->
     Result = luerl_sandbox:run(Script,
-                                LuaVM,
-                                Reduction,
-                                Period,
-                                Timeout,
-                                [[CallBackFunction], CallBackArgs]),
+                               LuaVM,
+                               Reduction,
+                               Period,
+                               Timeout,
+                               [[CallBackFunction], CallBackArgs]),
     Reply = case Result of
         {error, Reason} -> {error, Reason};
         {R, NewState} -> R
